@@ -1,17 +1,17 @@
 import axios from "axios";
+import cheerio from "cheerio";
+import Quote from "src/model/Quote";
+const url = "https://dolarhoy.com/";
 
-const findBlueUSDValue = async () => {
-  const apiResponse = await axios.get("");
-  const quotes = apiResponse.data;
-  const dolarBlue = quotes.find(quote => quote.nombre === "Dólar Informal");
-  const buy_price = parseFloat(dolarBlue.compra.replace(",", "."));
-  const sell_price = parseFloat(dolarBlue.venta.replace(",", "."));
-  const source = "https://www.ambito.com/contenidos/dolar.html";
-  return {
-    buy_price,
-    sell_price,
-    source
-  }
+const findBlueUSDValue = async (): Promise<Quote> => {
+  const { data: html } = await axios.get(url);
+
+  const $ = cheerio.load(html);
+  const buyText = $(".tile.is-parent.is-5").find(".compra").find(".val").text();
+  const sellText = $(".tile.is-parent.is-5").find(".venta").find(".val").text();
+  const buy_price = parseFloat(buyText.replace("$", ""));
+  const sell_price = parseFloat(sellText.replace("$", ""));
+  return { buy_price, sell_price, source: url };
 }
 
 export default {

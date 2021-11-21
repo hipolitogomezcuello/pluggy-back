@@ -1,7 +1,8 @@
 import axios from "axios";
+import Quote from "src/model/Quote";
 const ambitoApiUrl = "https://mercados.ambito.com//home/general";
 
-const findBlueUSDValue = async () => {
+const findBlueUSDValue = async () : Promise<Quote> => {
   const apiResponse = await axios.get(ambitoApiUrl);
   const quotes = apiResponse.data;
   const dolarBlue = quotes.find(quote => quote.nombre === "Dólar Informal");
