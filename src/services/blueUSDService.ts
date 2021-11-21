@@ -6,15 +6,10 @@ import cronistaRepository from "src/repositories/cronistaRepository";
 import dolarHoyRepository from "src/repositories/dolarHoyRepository";
 
 const getAllQuotes = async (): Promise<Quote[]> => {
-  const ambitoQuote = await ambitoRepository.findBlueUSDValue();
-  const dolarHoyQuote = await dolarHoyRepository.findBlueUSDValue();
-  const cronistaQuote = await cronistaRepository.findBlueUSDValue();
-
-  return [
-    ambitoQuote,
-    dolarHoyQuote,
-    cronistaQuote,
-  ]
+  const ambitoQuotePromise = ambitoRepository.findBlueUSDValue();
+  const dolarHoyQuotePromise = dolarHoyRepository.findBlueUSDValue();
+  const cronistaQuotePromise = cronistaRepository.findBlueUSDValue();
+  return await Promise.all([ambitoQuotePromise, dolarHoyQuotePromise, cronistaQuotePromise]);
 }
 
 const getAverage = (quotes: Quote[]): AverageQuote => {
