@@ -1,6 +1,7 @@
 import type { AWS } from '@serverless/typescript';
 
 import hello from '@functions/hello';
+import quotes from '@functions/quotes';
 
 const serverlessConfiguration: AWS = {
   service: 'pluggy-back',
@@ -22,7 +23,7 @@ const serverlessConfiguration: AWS = {
     lambdaHashingVersion: '20201221',
   },
   // import the function via paths
-  functions: { hello },
+  functions: { hello, quotes },
   package: { individually: true },
   custom: {
     esbuild: {
