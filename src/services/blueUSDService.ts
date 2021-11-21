@@ -49,6 +49,6 @@ const getAllSlippages = async (): Promise<Slippage[]> => {
 
 export default {
   getAllQuotes,
-  getAverage: async () => getAverage(await getAllQuotes()),
+  getAverage,
   getAllSlippages,
 };

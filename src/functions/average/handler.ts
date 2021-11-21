@@ -4,7 +4,8 @@ import { middyfy } from '@libs/lambda';
 import blueUSDService from 'src/services/blueUSDService';
 
 const average: ValidatedEventAPIGatewayProxyEvent<void> = async () => {
-  const averageQuote = await blueUSDService.getAverage();
+  const allQuotes = await blueUSDService.getAllQuotes();
+  const averageQuote = blueUSDService.getAverage(allQuotes);
   return formatJSONResponse(averageQuote);
 }
 
