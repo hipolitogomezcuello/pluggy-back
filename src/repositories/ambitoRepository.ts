@@ -10,6 +10,7 @@ const findBlueUSDValue = async () : Promise<Quote> => {
   const sell_price = parseFloat(dolarBlue.venta.replace(",", "."));
   const source = "https://www.ambito.com/contenidos/dolar.html";
   return {
+    name: "ámbito",
     buy_price,
     sell_price,
     source

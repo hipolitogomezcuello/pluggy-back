@@ -11,7 +11,7 @@ const findBlueUSDValue = async (): Promise<Quote> => {
   const sellText = $(".piece.markets.standard.boxed").find(".sell-value").text();
   const buy_price = parseFloat(buyText.replace("$", "").replace(",", "."));
   const sell_price = parseFloat(sellText.replace("$", "").replace(",", "."));
-  return { buy_price, sell_price, source: url };
+  return { name: "El Cronista", buy_price, sell_price, source: url };
 }
 
 export default {

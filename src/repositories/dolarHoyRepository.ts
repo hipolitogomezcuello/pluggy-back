@@ -11,7 +11,7 @@ const findBlueUSDValue = async (): Promise<Quote> => {
   const sellText = $(".tile.is-parent.is-5").find(".venta").find(".val").text();
   const buy_price = parseFloat(buyText.replace("$", ""));
   const sell_price = parseFloat(sellText.replace("$", ""));
-  return { buy_price, sell_price, source: url };
+  return { name: "DolarHoy", buy_price, sell_price, source: url };
 }
 
 export default {

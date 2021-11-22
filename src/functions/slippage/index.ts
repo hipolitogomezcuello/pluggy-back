@@ -7,6 +7,7 @@ export default {
       http: {
         method: 'get',
         path: 'slippage',
+        cors: true,
         request: {}
       }
     }
