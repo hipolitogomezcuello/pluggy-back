@@ -1,9 +1,9 @@
 import type { AWS } from '@serverless/typescript';
 
-import hello from '@functions/hello';
 import quotes from '@functions/quotes';
 import average from '@functions/average';
 import slippage from '@functions/slippage';
+import dynamoTest from '@functions/dynamoTest';
 
 const serverlessConfiguration: AWS = {
   service: 'pluggy-back',
@@ -23,11 +23,45 @@ const serverlessConfiguration: AWS = {
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
     },
     lambdaHashingVersion: '20201221',
+    iamRoleStatements: [
+      {
+        Effect: "Allow",
+        Action: [
+          "dynamodb:*"
+        ],
+        Resource: "*"
+      }
+    ]
   },
   // import the function via paths
-  functions: { hello, quotes, average, slippage },
+  functions: { quotes, average, slippage, dynamoTest },
+  resources: {
+    Resources: {
+      MyDinamoDBTable: {
+        Type: 'AWS::DynamoDB::Table',
+        Properties: {
+          TableName: "${self:custom.tableName}",
+          AttributeDefinitions: [
+            {
+              "AttributeName": "ID",
+              "AttributeType": "S"
+            }
+          ],
+          "KeySchema": [
+            {
+              "AttributeName": "ID",
+              "KeyType": "HASH"
+            }
+          ],
+          "BillingMode": "PAY_PER_REQUEST"
+        }
+      }
+        
+    }
+  },
   package: { individually: true },
   custom: {
+    tableName: "quotes-info",
     esbuild: {
       bundle: true,
       minify: false,
